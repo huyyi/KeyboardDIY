@@ -197,16 +197,19 @@ void loop()
 <h4>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PCB制作</h4>
 <p>
-PCB制作参考了<a href="http://tieba.baidu.com/p/4592747695" target="_blank">用Altium Designer画一张机械键盘PCB</a>这个帖子，需要注意的是，由于我们没有采用矩阵键盘的设计，所以每个LED下面都需要接一个电阻，由于Arduino的数字口的输出电压为5V，因此要达到LED3V的电压要求需要串联一个220欧的电阻。需注意不同颜色的LED灯的额定电压不同，在选配灯珠时需考虑电阻的选择。<img src="image/I-V.jpg" alt="电流电压表">
+PCB制作参考了<a href="http://tieba.baidu.com/p/4592747695" target="_blank">用Altium Designer画一张机械键盘PCB</a>这个帖子，需要注意的是，由于我们没有采用矩阵键盘的设计，所以每个LED下面都需要接一个电阻，由于Arduino的数字口的输出电压为5V，因此要达到LED3V的电压要求需要串联一个220欧的电阻。需注意不同颜色的LED灯的额定电压不同，在选配灯珠时需考虑电阻的选择。完成后原理图及PCB如下：
 </p>
-<ul>
-<li>原理图如下：<img src="image/原理图.png" alt=""></li>
-<li>PCB完成图如下：<img src="image/PCB.png" alt=""></li>
-</ol>
+<ul class="pic_show">
+<li><img src="image/原理图.png" alt=""></li>
+<li><img src="image/PCB.png" alt=""></li>
+</ul>
 <h4>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>外壳制作</h4>
+<p>
+根据PCB制作那个帖子，在定位板生成网站得到dxf文件之后导入Fusion360拉出外壳，要注意符合PCB板的尺寸，然后导入makerbot切片打印
+</p>
 <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>成品展示</h3>
 
 <p>You can @mention a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
 

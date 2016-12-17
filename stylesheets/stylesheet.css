@@ -243,3 +243,7 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+@media screen and (max-width: 42em) {
+  .pic_show li{
+    display:inline;} }
