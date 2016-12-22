@@ -5,9 +5,16 @@
     <title>数字功能键盘</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="css/index.css" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+	<link href="zzsc.css" type="text/css" rel="stylesheet" media="screen" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.corner.js"></script>
+	<script type="text/javascript" src="js/jquery.roundabout.js"></script>
+	<script type="text/javascript" src="js/jquery.roundabout-shapes.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
   </head>
   <body>
     <section class="page-header">
@@ -45,9 +52,13 @@
 </p>
 <textarea id="txtCon" rows="20" cols="69" >
 #include <Keyboard.h>
+
 // jianpan.ino
+int brightness = 0;
+int fadeAmount = 5;
 int fn, key1, key2, key3, key4, key5, key6, key7, key8, key9, key0;
 void setup() {
+  pinMode(13, OUTPUT);
   for (int i = 2; i < 15; i++)
   {
     pinMode(i, INPUT_PULLUP);
@@ -68,7 +79,19 @@ void loop()
     key8 = digitalRead(10);
     key9 = digitalRead(11);
     key0 = digitalRead(12);
-    if(fn==1)//用fn键来控制层
+	if(key2==0&&key6==0&&key4==0)\\快速登陆
+	{
+		Keyboard.print("你的账号"）;
+		Keyboard.press(KEY_TAB);
+		Keyboard.releaseAll();
+		delay(250);
+		Keyboard.print("你的密码"）;
+		delay(250);
+		Keyboard.press(KEY_RETURN);
+		Keyboard.releaseAll();
+		delay(500);
+	}
+	if(fn==1)
     {
         if(key1==0)
         {
@@ -77,17 +100,17 @@ void loop()
         }
         if(key2==0)
         {
-            Keyboard.print("2");
+            Keyboard.print("8");
             delay(250);
         }
         if(key3==0)
         {
-            Keyboard.print("3");
+            Keyboard.print("9");
             delay(250);
         }
         if(key4==0)
         {
-            Keyboard.print("4");
+            Keyboard.print("6");
             delay(250);
         }
         if(key5==0)
@@ -97,7 +120,7 @@ void loop()
         }
         if(key6==0)
         {
-            Keyboard.print("6");
+            Keyboard.print("4");
             delay(250);
         }
         if(key7==0)
@@ -107,12 +130,12 @@ void loop()
         }
         if(key8==0)
         {
-            Keyboard.print("8");
+            Keyboard.print("2");
             delay(250);
         }
         if(key9==0)
         {
-            Keyboard.print("9");
+            Keyboard.print("3");
             delay(250);
         }
         if(key0==0)
@@ -123,39 +146,39 @@ void loop()
     }
     else
     {
-        if(key1==0)//复制快捷键
+        if(key1==0)//复制快捷键（del+1）
         {
             Keyboard.press(KEY_LEFT_CTRL);
             Keyboard.print("c");
             Keyboard.releaseAll();
             delay(1000);
         }
-        if(key2==0)//粘贴快捷键
+        if(key8==0)//粘贴快捷键（del+2）
         {
             Keyboard.press(KEY_LEFT_CTRL);
             Keyboard.print("v");
             Keyboard.releaseAll();
             delay(1000);
         }
-        if(key3==0)//快捷关机
+        if(key3==0)//1分钟后关机（del+9）
         {
             Keyboard.press(KEY_LEFT_GUI);
-            Keyboard.print("d");
+            Keyboard.print("r");
             Keyboard.releaseAll();
-            Keyboard.press(KEY_LEFT_ALT);
-            Keyboard.press(KEY_F4);
-            Keyboard.releaseAll();
+            delay(500);
+            Keyboard.print("shutdown -s -t 60");
             Keyboard.press(KEY_RETURN);
-            delay(1000);
-        }
-        if(key4==0)//显示桌面
+            Keyboard.releaseAll();
+            delay(500);
+          }
+        if(key4==0)//显示桌面（del+6）
         {
             Keyboard.press(KEY_LEFT_GUI);
             Keyboard.print("d");
             Keyboard.releaseAll();
             delay(1000);
         }
-        if(key5==0)//资源管理器
+        if(key5==0)//资源管理器（del+5）
         {
             Keyboard.press(KEY_LEFT_GUI);
             Keyboard.print("e");
@@ -172,23 +195,38 @@ void loop()
             Keyboard.print("7");
             delay(250);
         }
-        if(key8==0)
+        if(key2==0)//取消关机（del+8）
         {
-            Keyboard.print("8");
-            delay(250);
+            Keyboard.press(KEY_LEFT_GUI);
+            Keyboard.print("r");
+            Keyboard.releaseAll();
+            delay(500);
+            Keyboard.print("shutdown -a");
+            Keyboard.press(KEY_RETURN);
+            Keyboard.releaseAll();
+            delay(500);
         }
-        if(key9==0)
+        if(key9==0)//剪切（del+3）
         {
-            Keyboard.print("9");
-            delay(250);
+            Keyboard.press(KEY_LEFT_CTRL);
+            Keyboard.print("x");
+            Keyboard.releaseAll();
+            delay(1000);
         }
-        if(key0==0)
+        if(key0==0)//（退格）
         {
-            Keyboard.print("0");
+            Keyboard.press(KEY_BACKSPACE);
+            Keyboard.releaseAll();
             delay(250);
         }
     }
-        
+      analogWrite(13, brightness);
+  brightness = brightness + fadeAmount;
+  if (brightness == 0 || brightness == 255) {
+    fadeAmount = -fadeAmount ;
+  }    
+  //延时30毫秒
+  delay(30);        
 }
 </textarea>
 <p>
@@ -197,26 +235,57 @@ void loop()
 <h4>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PCB制作</h4>
 <p>
-PCB制作参考了<a href="http://tieba.baidu.com/p/4592747695" target="_blank">用Altium Designer画一张机械键盘PCB</a>这个帖子，需要注意的是，由于我们没有采用矩阵键盘的设计，所以每个LED下面都需要接一个电阻，由于Arduino的数字口的输出电压为5V，因此要达到LED3V的电压要求需要串联一个220欧的电阻。需注意不同颜色的LED灯的额定电压不同，在选配灯珠时需考虑电阻的选择。PCB淘宝印刷要一周左右，且价格较贵，如果不能接受可以自己用覆铜板蚀刻，但是线路就只能画一层。完成后原理图及PCB如下：
+PCB制作参考了<a href="http://tieba.baidu.com/p/4592747695" target="_blank">用Altium Designer画一张机械键盘PCB</a>这个帖子，需要注意的是，由于我们没有采用矩阵键盘的设计，所以每个LED下面都需要接一个电阻，由于Arduino的数字口的输出电压为5V，因此要达到LED3V的电压要求需要串联一个220欧的电阻。需注意不同颜色的LED灯的额定电压不同，在选配灯珠时需考虑电阻的选择。PCB淘宝印刷要一周左右，且价格较贵，如果不能接受可以自己用覆铜板蚀刻，但是线路就只能画一层。蚀刻法过程如下，再附上印刷电路板的原理图和pcb，文件上传在了github，（感谢张伯霖老师在感冒中指导我们完成了PCB的蚀刻）
 </p>
-<ul class="pic_show">
-<li><img src="image/原理图.png" alt=""></li>
-<li><img src="image/PCB.png" alt=""></li>
-</ul>
+<div id="header">
+<div id="gla">
+	<div id="gla_box">
+    	<ul>
+    	
+        	<li>
+            	<div class="gla_inbox">
+                	<p>打印电路</p>
+                    <img src="image/1.jpg" />
+                </div>
+            </li>
+            
+        	<li>
+            	<div class="gla_inbox">
+                	<p>放进热转印机转印</p>
+                    <img src="image/2.jpg" />
+                </div>
+            </li>
+            
+        	<li>
+            	<div class="gla_inbox">
+                	<p>腐蚀</p>
+                    <img src="image/3.jpg" />
+                </div>
+            </li>
+            
+        	<li>
+            	<div class="gla_inbox">
+                	<p>打孔</p>
+                    <img src="image/4.jpg" />
+                </div>
+            </li>
+            
+        	<li>
+            	<div class="gla_inbox">
+                	<p>安装原件并焊接</p>
+                    <img src="image/5.jpg" />
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+</div>
 <h4>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>外壳制作</h4>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>外壳制作
+</h4>
 <p>
-根据PCB制作那个帖子，在定位板生成网站得到dxf文件之后导入Fusion360拉出外壳，要注意符合PCB板的尺寸，然后导入makerbot切片打印
+根据PCB制作那个帖子，在定位板生成网站得到dxf文件之后导入Fusion360拉出外壳，要注意符合PCB板的尺寸，然后导入makerbot切片打印，前提是你是打印电路板，每个孔位开的整整齐齐，要是像我们那样比较注重环保（懒）用一个纸盒子挖个洞就可以了<img src="image/11.jpg" />
 </p>
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>成品展示</h3>
-
-<p>You can @mention a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/aoba98/code2things">Code2things</a> is maintained by <a href="https://github.com/aoba98">aoba98</a>.</span>
